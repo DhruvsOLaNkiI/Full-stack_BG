@@ -1,0 +1,16 @@
+# Sensitive files
+config/serviceAccountKey.json
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
