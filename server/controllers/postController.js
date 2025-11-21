@@ -1,0 +1,211 @@
+const Post = require('../models/Post');
+
+exports.getAllPosts = async (req, res) => {
+    try {
+        const { category, tag } = req.query;
+        const posts = await Post.findAll({ category, tag });
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching posts', error: error.message });
+    }
+};
+
+exports.getPostById = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // View Counting Logic
+        const token = req.headers['authorization'];
+        if (token) {
+            try {
+                const bearer = token.split(' ')[1];
+                const jwt = require('jsonwebtoken');
+                const decoded = jwt.verify(bearer, process.env.JWT_SECRET || 'default_secret_key');
+                const userId = decoded.id;
+                const postId = req.params.id;
+
+                const { db } = require('../config/firebase');
+                const viewsRef = db.collection('post_views');
+
+                // Check for existing view in last hour
+                const snapshot = await viewsRef
+                    .where('userId', '==', userId)
+                    .where('postId', '==', postId)
+                    .where('timestamp', '>', new Date(Date.now() - 60 * 60 * 1000).toISOString())
+                    .get();
+
+                if (snapshot.empty) {
+                    // No recent view, so count it
+                    await viewsRef.add({
+                        userId,
+                        postId,
+                        timestamp: new Date().toISOString()
+                    });
+                    await Post.incrementViews(postId);
+                    post.views = (post.views || 0) + 1; // Update local object to return new count
+                }
+            } catch (err) {
+                console.error("View counting error:", err.message);
+                // Continue even if view counting fails
+            }
+        }
+
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching post', error: error.message });
+    }
+};
+
+exports.createPost = async (req, res) => {
+    try {
+        const { title, content, tags, category } = req.body;
+        const User = require('../models/User');
+
+        // Fetch user to get their name
+        const user = await User.findById(req.userId);
+        const authorName = user?.name || 'Anonymous';
+
+        const newPost = {
+            title,
+            content,
+            authorId: req.userId,
+            authorName,
+            tags: tags || [],
+            category: category || 'General',
+            imageUrl: req.body.imageUrl || '',
+            likes: [],
+            commentsCount: 0,
+            views: 0,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        const created = await Post.create(newPost);
+        res.status(201).json(created);
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating post', error: error.message });
+    }
+};
+
+exports.updatePost = async (req, res) => {
+    try {
+        const { title, content, tags, category } = req.body;
+        const post = await Post.findById(req.params.id);
+
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+
+        // Check ownership or admin
+        if (post.authorId !== req.userId && req.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+
+        const updated = await Post.update(req.params.id, { title, content, tags, category });
+        res.json(updated);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating post', error: error.message });
+    }
+};
+
+exports.deletePost = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+
+        if (post.authorId !== req.userId && req.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+
+        await Post.delete(req.params.id);
+        res.json({ message: 'Post deleted' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting post', error: error.message });
+    }
+};
+
+exports.toggleLike = async (req, res) => {
+    try {
+        const { db } = require('../config/firebase');
+        const postRef = db.collection('posts').doc(req.params.id);
+        const post = await postRef.get();
+
+        if (!post.exists) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        const postData = post.data();
+        const likes = postData.likes || [];
+        const userId = req.userId;
+
+        if (likes.includes(userId)) {
+            // Unlike
+            await postRef.update({
+                likes: likes.filter(id => id !== userId)
+            });
+        } else {
+            // Like
+            await postRef.update({
+                likes: [...likes, userId]
+            });
+        }
+
+        const updated = await postRef.get();
+        res.json({ id: req.params.id, ...updated.data() });
+    } catch (error) {
+        res.status(500).json({ message: 'Error toggling like', error: error.message });
+    }
+};
+
+exports.addComment = async (req, res) => {
+    try {
+        const { content } = req.body;
+        const { db } = require('../config/firebase');
+        const User = require('../models/User');
+        const postRef = db.collection('posts').doc(req.params.id);
+        const post = await postRef.get();
+
+        if (!post.exists) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Fetch user to get their name
+        const user = await User.findById(req.userId);
+        const authorName = user?.name || 'Anonymous';
+
+        const comment = {
+            content,
+            authorId: req.userId,
+            authorName,
+            createdAt: new Date().toISOString()
+        };
+
+        await db.collection('posts').doc(req.params.id).collection('comments').add(comment);
+
+        // Increment comment count
+        const postData = post.data();
+        await postRef.update({
+            commentsCount: (postData.commentsCount || 0) + 1
+        });
+
+        res.status(201).json(comment);
+    } catch (error) {
+        res.status(500).json({ message: 'Error adding comment', error: error.message });
+    }
+};
+
+exports.getComments = async (req, res) => {
+    try {
+        const { db } = require('../config/firebase');
+        const snapshot = await db.collection('posts').doc(req.params.id).collection('comments')
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        const comments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.json(comments);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching comments', error: error.message });
+    }
+};
