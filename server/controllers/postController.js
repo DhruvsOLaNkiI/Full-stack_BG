@@ -2,9 +2,30 @@ const Post = require('../models/Post');
 
 exports.getAllPosts = async (req, res) => {
     try {
-        const { category, tag } = req.query;
-        const posts = await Post.findAll({ category, tag });
-        res.json(posts);
+        const { category, tag, sortBy, startDate, endDate, limit = 50 } = req.query;
+        let posts = await Post.findAll({ category, tag, startDate, endDate });
+
+        // In-memory sorting
+        if (sortBy === 'likes') {
+            posts.sort((a, b) => {
+                const likesA = a.likes?.length || 0;
+                const likesB = b.likes?.length || 0;
+                if (likesB !== likesA) {
+                    return likesB - likesA;
+                }
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+        } else {
+            // Default to date desc
+            posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
+        // Limit results for performance
+        const limitedPosts = posts.slice(0, parseInt(limit));
+
+        // Add cache headers (5 minutes)
+        res.set('Cache-Control', 'public, max-age=300');
+        res.json(limitedPosts);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching posts', error: error.message });
     }
@@ -31,13 +52,20 @@ exports.getPostById = async (req, res) => {
                 const viewsRef = db.collection('post_views');
 
                 // Check for existing view in last hour
+                // Check for existing view in last hour
+                // Simplified query to avoid complex index requirement
                 const snapshot = await viewsRef
                     .where('userId', '==', userId)
                     .where('postId', '==', postId)
-                    .where('timestamp', '>', new Date(Date.now() - 60 * 60 * 1000).toISOString())
                     .get();
 
-                if (snapshot.empty) {
+                const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+                const hasRecentView = snapshot.docs.some(doc => {
+                    const data = doc.data();
+                    return new Date(data.timestamp) > oneHourAgo;
+                });
+
+                if (!hasRecentView) {
                     // No recent view, so count it
                     await viewsRef.add({
                         userId,
@@ -92,7 +120,7 @@ exports.createPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
     try {
-        const { title, content, tags, category } = req.body;
+        const { title, content, tags, category, imageUrl } = req.body;
         const post = await Post.findById(req.params.id);
 
         if (!post) return res.status(404).json({ message: 'Post not found' });
@@ -102,7 +130,14 @@ exports.updatePost = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized' });
         }
 
-        const updated = await Post.update(req.params.id, { title, content, tags, category });
+        console.log(`Updating post ${req.params.id} with data:`, { title, content, tags, category, imageUrl });
+
+        // Filter out undefined values to avoid overwriting with undefined if not provided
+        const updateData = { title, content, tags, category };
+        if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
+
+        const updated = await Post.update(req.params.id, updateData);
+        console.log('Post updated in DB:', updated);
         res.json(updated);
     } catch (error) {
         res.status(500).json({ message: 'Error updating post', error: error.message });

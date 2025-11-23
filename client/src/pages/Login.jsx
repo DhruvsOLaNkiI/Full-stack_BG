@@ -31,8 +31,8 @@ const Login = () => {
                 {error && <div style={{ color: 'var(--secondary)', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <input
-                        type="email"
-                        placeholder="Email"
+                        type="text"
+                        placeholder="Email or Username"
                         className="input"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}

@@ -20,6 +20,7 @@ exports.register = async (req, res) => {
             email,
             password: hashedPassword,
             name,
+            name_lower: name.toLowerCase(), // Store lowercase name for case-insensitive search
             role: role || 'blogger', // Default to blogger, can be 'admin'
             createdAt: new Date().toISOString()
         };
@@ -34,12 +35,22 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body; // 'email' field from client can now be email or username
 
-        const user = await User.findByEmail(email);
+        console.log(`Login attempt for: ${email}`);
+        let user = await User.findByEmail(email);
         if (!user) {
+            console.log(`User not found by email, trying name: ${email}`);
+            // Try finding by name if email not found
+            user = await User.findByName(email);
+        }
+
+        if (!user) {
+            console.log('User not found by email or name');
             return res.status(400).json({ message: 'Invalid credentials' });
         }
+
+        console.log(`User found: ${user.email} (${user.name})`);
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {

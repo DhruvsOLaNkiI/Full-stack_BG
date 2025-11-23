@@ -1,15 +1,45 @@
 :root {
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
+  /* Cream/Peach color palette */
+  --primary: #f59e0b;
+  --primary-hover: #d97706;
   --secondary: #ec4899;
+  --background: #faf5f0;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --glass: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(149, 128, 105, 0.2);
+
+  /* Featured card colors */
+  --card-green: #d4fc79;
+  --card-peach: #f6d365;
+  --card-purple: #e0c3fc;
+  --card-blue: #aee1f9;
+  --card-tan: #e8d5c4;
+}
+
+/* Dark Mode Theme */
+[data-theme="dark"] {
+  --primary: #fbbf24;
+  --primary-hover: #f59e0b;
+  --secondary: #f472b6;
   --background: #0f172a;
   --surface: #1e293b;
-  --text: #f8fafc;
+  --text: #f1f5f9;
   --text-muted: #94a3b8;
   --border: #334155;
-  --glass: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(100, 116, 139, 0.2);
+
+  /* Featured card colors - darker variants */
+  --card-green: #3b5a2e;
+  --card-peach: #6b4e2a;
+  --card-purple: #4a3a5e;
+  --card-blue: #2a4a5e;
+  --card-tan: #4a3f34;
 }
+
 
 * {
   box-sizing: border-box;
@@ -22,6 +52,7 @@ body {
   background-color: var(--background);
   color: var(--text);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -37,10 +68,11 @@ a:hover {
 /* Glassmorphism Utilities */
 .glass {
   background: var(--glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  will-change: transform;
 }
 
 .container {
@@ -116,7 +148,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: white;
+  color: var(--text);
   margin-bottom: 1rem;
 }
 
@@ -137,6 +169,454 @@ h3 {
 
 .text-gradient {
   background: linear-gradient(to right, var(--primary), var(--secondary));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .post-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Scroll-triggered fade-up animation */
+@keyframes scrollFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-animate {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.scroll-animate.animate {
+  animation: scrollFadeUp 0.8s ease-out forwards;
+}
+
+/* ReactQuill Rich Text Editor Styling */
+.quill-wrapper {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.quill-wrapper .ql-toolbar {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem;
+}
+
+.quill-wrapper .ql-container {
+  border: none;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  min-height: 300px;
+}
+
+.quill-wrapper .ql-editor {
+  min-height: 300px;
+  color: var(--text);
+  padding: 1rem;
+}
+
+.quill-wrapper .ql-editor.ql-blank::before {
+  color: var(--text-muted);
+  font-style: normal;
+  left: 1rem;
+}
+
+/* Toolbar button styling */
+.quill-wrapper .ql-stroke {
+  stroke: var(--text);
+}
+
+.quill-wrapper .ql-fill {
+  fill: var(--text);
+}
+
+.quill-wrapper .ql-picker-label {
+  color: var(--text);
+}
+
+.quill-wrapper button:hover .ql-stroke,
+.quill-wrapper button:focus .ql-stroke,
+.quill-wrapper button.ql-active .ql-stroke {
+  stroke: var(--primary);
+}
+
+.quill-wrapper button:hover .ql-fill,
+.quill-wrapper button:focus .ql-fill,
+.quill-wrapper button.ql-active .ql-fill {
+  fill: var(--primary);
+}
+
+.quill-wrapper .ql-picker-label:hover,
+.quill-wrapper .ql-picker-label.ql-active {
+  color: var(--primary);
+}
+
+/* Formatted content styling */
+.quill-wrapper .ql-editor h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.quill-wrapper .ql-editor h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quill-wrapper .ql-editor h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.quill-wrapper .ql-editor blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.quill-wrapper .ql-editor pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.quill-wrapper .ql-editor code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+}
+
+.quill-wrapper .ql-editor a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.quill-wrapper .ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  display: block;
+}
+
+/* Navbar Modern Animations */
+.navbar-logo {
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--primary));
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease infinite;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+  animation-play-state: paused;
+}
+
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Navbar Link Animations */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+}
+
+/* Enhanced Button Animations */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(10deg);
+  border-color: var(--primary);
+  background: var(--surface);
+}
+
+.theme-toggle svg {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  color: var(--text);
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(20deg) scale(1.1);
+  color: var(--primary);
+}
+
+/* Icon animations */
+.icon-bounce {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.icon-bounce:hover {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Navbar sticky with blur */
+nav {
+  transition: all 0.3s ease;
+}
+
+nav.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Interactive Like/Comment Buttons */
+.interaction-container {
+  display: flex;
+  position: relative;
+  gap: 25px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* pill item */
+.interaction-btn {
+  position: relative;
+  list-style: none;
+  width: 60px;
+  height: 60px;
+  background: var(--surface);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 60px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  overflow: hidden;
+  /* Changed to hidden to contain pseudo-elements */
+  border: 1px solid var(--border);
+}
+
+/* gradient overlay (hidden until hover) */
+.interaction-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 60px;
+  background: linear-gradient(45deg, var(--i), var(--j));
+  opacity: 0;
+  transition: 0.5s;
+}
+
+/* blurred glow behind */
+.interaction-btn::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 60px;
+  background: linear-gradient(45deg, var(--i), var(--j));
+  transition: 0.5s;
+  filter: blur(15px);
+  z-index: -1;
+  opacity: 0;
+}
+
+/* hover expands the pill */
+.interaction-btn:hover {
+  width: 180px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0);
+}
+
+.interaction-btn:hover::before {
+  opacity: 1;
+}
+
+.interaction-btn:hover::after {
+  opacity: 0.5;
+}
+
+/* icon styling */
+.interaction-btn .icon {
+  color: var(--text-muted);
+  transition: 0.5s;
+  transition-delay: 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  /* Ensure above gradient */
+}
+
+/* hide icon when hovered (gives effect of icon replaced by text) */
+.interaction-btn:hover .icon {
+  transform: scale(0);
+  color: #fff;
+  transition-delay: 0s;
+}
+
+/* text styling (hidden by default with scale 0) */
+.interaction-btn .title {
+  position: absolute;
+  color: #fff;
+  font-size: 1.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: scale(0);
+  transition: 0.5s;
+  transition-delay: 0s;
+  z-index: 3;
+  /* Ensure above gradient */
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.interaction-btn:hover .title {
+  transform: scale(1);
+  transition-delay: 0.25s;
+}
+
+/* Active state for Like button (if already liked) */
+.interaction-btn.like.active {
+  border-color: var(--secondary);
+}
+
+.interaction-btn.like.active .icon {
+  color: var(--secondary);
+}
+
+/* Individual color vars for each button */
+/* Like (pink/red) */
+.interaction-btn.like {
+  --i: #ffa9c6;
+  --j: #f434e2;
+}
+
+/* Comment (blue/cyan) */
+.interaction-btn.comment {
+  --i: #56CCF2;
+  --j: #2F80ED;
+}
+
+/* Small variant for cards */
+.interaction-container.small {
+  gap: 15px;
+}
+
+.interaction-container.small .interaction-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+}
+
+.interaction-container.small .interaction-btn::before,
+.interaction-container.small .interaction-btn::after {
+  border-radius: 40px;
+}
+
+.interaction-container.small .interaction-btn:hover {
+  width: 140px;
+}
+
+.interaction-container.small .interaction-btn .title {
+  font-size: 0.85rem;
 }

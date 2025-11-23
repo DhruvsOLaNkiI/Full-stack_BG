@@ -33,12 +33,20 @@ class Post {
         if (filters.category) {
             query = query.where('category', '==', filters.category);
         }
-        // Note: Firestore array-contains only works for one field at a time usually
         if (filters.tag) {
             query = query.where('tags', 'array-contains', filters.tag);
         }
+        if (filters.startDate) {
+            query = query.where('createdAt', '>=', filters.startDate);
+        }
+        if (filters.endDate) {
+            query = query.where('createdAt', '<=', filters.endDate);
+        }
 
-        const snapshot = await query.orderBy('createdAt', 'desc').get();
+        // Default sort by date if no other specific sort that conflicts
+        // Note: Firestore requires an index for range filter + sort on different field
+        // For now, we'll fetch and let controller sort if needed, or just default sort here
+        const snapshot = await query.get();
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
 

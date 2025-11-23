@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors());
@@ -22,6 +22,8 @@ console.log('Loading post routes...');
 app.use('/api/posts', require('./routes/postRoutes'));
 console.log('Loading user routes...');
 app.use('/api/users', require('./routes/userRoutes'));
+console.log('Loading featured routes...');
+app.use('/api/featured', require('./routes/featuredRoutes'));
 console.log('All routes loaded successfully');
 
 // Admin Route (Example)
