@@ -151,17 +151,17 @@ const Profile = () => {
                         border: '1px solid var(--border)'
                     }}>
                         <div style={{ textAlign: 'center', minWidth: '80px' }}>
-                            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>{stats.totalPosts}</div>
+                            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text)' }}>{stats.totalPosts}</div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '0.25rem' }}>Posts</div>
                         </div>
                         <div style={{ width: '1px', background: 'var(--border)' }}></div>
                         <div style={{ textAlign: 'center', minWidth: '80px' }}>
-                            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>{stats.totalViews}</div>
+                            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text)' }}>{stats.totalViews}</div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '0.25rem' }}>Views</div>
                         </div>
                         <div style={{ width: '1px', background: 'var(--border)' }}></div>
                         <div style={{ textAlign: 'center', minWidth: '80px' }}>
-                            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>{stats.totalLikes}</div>
+                            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text)' }}>{stats.totalLikes}</div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '0.25rem' }}>Likes</div>
                         </div>
                     </div>
