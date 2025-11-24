@@ -24,7 +24,7 @@ const Login = () => {
     return (
         <div style={{ maxWidth: '400px', margin: '0 auto', paddingTop: '4rem' }}>
             <Helmet>
-                <title>Login | BlogApp</title>
+                <title>Login | KirdarBlogs</title>
             </Helmet>
             <div className="glass" style={{ padding: '2rem', borderRadius: '1rem' }}>
                 <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Welcome Back</h2>
