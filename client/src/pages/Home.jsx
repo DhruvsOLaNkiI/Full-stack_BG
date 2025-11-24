@@ -18,6 +18,13 @@ const Home = () => {
     const [activeTab, setActiveTab] = useState('feed'); // feed, mostLiked, custom
     const [dateRange, setDateRange] = useState({ start: '', end: '' });
 
+    // Helper function to strip HTML tags from content
+    const stripHtml = (html) => {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    };
+
     useScrollAnimation(containerRef, [posts]);
 
     // Fetch featured only once on mount
@@ -174,7 +181,7 @@ const Home = () => {
                                         by <Link to={`/profile/${post.authorId}`} style={{ color: 'var(--text-muted)', textDecoration: 'none', fontWeight: '500' }} onMouseOver={(e) => e.target.style.color = 'var(--primary)'} onMouseOut={(e) => e.target.style.color = 'var(--text-muted)'}>{post.authorName || 'Anonymous'}</Link>
                                     </p>
                                     <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', flex: 1 }}>
-                                        {post.content.substring(0, 100)}...
+                                        {stripHtml(post.content).substring(0, 150)}...
                                     </p>
 
                                     <div style={{ marginBottom: '1rem' }}>
