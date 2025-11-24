@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://full-stack-bg.vercel.app/sitemap.xml

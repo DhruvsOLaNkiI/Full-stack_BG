@@ -78,8 +78,11 @@ const Home = () => {
     return (
         <div>
             <Helmet>
-                <title>Home | BlogApp</title>
+                <title>Home | Kirdarbarcelona</title>
                 <meta name="description" content="Latest blogs and stories from our community." />
+                <meta property="og:title" content="Kirdarbarcelona - Share Your Stories" />
+                <meta property="og:description" content="Latest blogs and stories from our community." />
+                <meta property="og:type" content="website" />
             </Helmet>
 
 

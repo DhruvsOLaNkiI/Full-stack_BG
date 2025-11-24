@@ -113,8 +113,12 @@ const Post = () => {
     return (
         <div className="container" style={{ maxWidth: '800px' }}>
             <Helmet>
-                <title>{post.title} | BlogApp</title>
+                <title>{post.title} | Kirdarbarcelona</title>
                 <meta name="description" content={post.content.substring(0, 150)} />
+                <meta property="og:title" content={`${post.title} | Kirdarbarcelona`} />
+                <meta property="og:description" content={post.content.substring(0, 150)} />
+                <meta property="og:type" content="article" />
+                {post.imageUrl && <meta property="og:image" content={post.imageUrl} />}
             </Helmet>
 
             {isEditing ? (
