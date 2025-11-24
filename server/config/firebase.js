@@ -6,7 +6,18 @@ const path = require('path');
 // For this setup, we'll assume the user will provide the file or we use mock for dev if missing (but better to fail fast or warn).
 
 try {
-    const serviceAccount = require('./serviceAccountKey.json');
+    let serviceAccount;
+
+    console.log("Checking FIREBASE_SERVICE_ACCOUNT env var...");
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+        console.log("FIREBASE_SERVICE_ACCOUNT found. Parsing...");
+        // Use environment variable if available (Production/Render)
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    } else {
+        console.log("FIREBASE_SERVICE_ACCOUNT NOT found. Falling back to file.");
+        // Fallback to local file (Development)
+        serviceAccount = require('./serviceAccountKey.json');
+    }
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
     });
