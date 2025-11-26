@@ -25,6 +25,8 @@ console.log('Loading user routes...');
 app.use('/api/users', require('./routes/userRoutes'));
 console.log('Loading featured routes...');
 app.use('/api/featured', require('./routes/featuredRoutes'));
+console.log('Loading sitemap route...');
+app.use('/sitemap.xml', require('./routes/sitemapRoutes'));
 console.log('All routes loaded successfully');
 
 // Admin Route (Example)
