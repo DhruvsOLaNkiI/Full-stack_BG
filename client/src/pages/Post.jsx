@@ -111,7 +111,7 @@ const Post = () => {
     const isAuthor = user.id === post.authorId;
 
     return (
-        <div className="container" style={{ maxWidth: '800px' }}>
+        <div className="container" style={{ maxWidth: '800px', padding: '1rem' }}>
             <Helmet>
                 <title>{post.title} | KirdarBlogs</title>
                 <meta name="description" content={post.content.substring(0, 150)} />
@@ -183,7 +183,7 @@ const Post = () => {
                     </form>
                 </div>
             ) : (
-                <article className="glass" style={{ padding: '3rem', borderRadius: '1rem' }}>
+                <article className="glass" style={{ padding: 'clamp(1.5rem, 5vw, 3rem)', borderRadius: '1rem' }}>
                     <div style={{ marginBottom: '2rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <span style={{ color: 'var(--primary)', fontWeight: 'bold', textTransform: 'uppercase' }}>{post.category}</span>
@@ -193,7 +193,7 @@ const Post = () => {
                                 </button>
                             )}
                         </div>
-                        <h1 style={{ fontSize: '3rem', lineHeight: 1.2, margin: '1rem 0' }}>{post.title}</h1>
+                        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1.2, margin: '1rem 0' }}>{post.title}</h1>
                         <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                             <span>By <Link to={`/profile/${post.authorId}`} style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.color = 'var(--primary)'} onMouseOut={(e) => e.target.style.color = 'inherit'}>{post.authorName || 'Anonymous'}</Link></span>
                             <span>•</span>
@@ -211,7 +211,7 @@ const Post = () => {
                         />
                     )}
 
-                    <div style={{ fontSize: '1.2rem', lineHeight: 1.8, whiteSpace: 'pre-wrap', marginBottom: '2rem' }}>
+                    <div style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', lineHeight: 1.8, whiteSpace: 'pre-wrap', marginBottom: '2rem' }}>
                         {post.content}
                     </div>
 
@@ -226,7 +226,7 @@ const Post = () => {
                     </div>
 
                     <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
-                        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem' }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
                             {post.tags && post.tags.map(tag => (
                                 <span key={tag} style={{ background: 'var(--surface)', padding: '0.25rem 0.75rem', borderRadius: '1rem', fontSize: '0.9rem' }}>
                                     #{tag}

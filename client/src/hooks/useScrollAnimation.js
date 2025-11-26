@@ -10,12 +10,12 @@ export function useScrollAnimation(containerRef, deps = []) {
         const container = containerRef.current;
         if (!container) return;
 
-        // Small timeout to ensure DOM is ready
+        let observer;
         const timeoutId = setTimeout(() => {
             const elements = container.querySelectorAll('.scroll-animate');
             if (elements.length === 0) return;
 
-            const observer = new IntersectionObserver(
+            observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
@@ -27,11 +27,11 @@ export function useScrollAnimation(containerRef, deps = []) {
                 { threshold: 0.1 }
             );
             elements.forEach((el) => observer.observe(el));
-
-            // Cleanup function for this effect run
-            return () => observer.disconnect();
         }, 100);
 
-        return () => clearTimeout(timeoutId);
+        return () => {
+            clearTimeout(timeoutId);
+            if (observer) observer.disconnect();
+        };
     }, [containerRef, ...deps]);
 }

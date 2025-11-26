@@ -20,9 +20,7 @@ const Home = () => {
 
     // Helper function to strip HTML tags from content
     const stripHtml = (html) => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || '';
+        return html.replace(/<[^>]*>?/gm, '') || '';
     };
 
     useScrollAnimation(containerRef, [posts]);
@@ -167,6 +165,7 @@ const Home = () => {
                                     <img
                                         src={post.imageUrl}
                                         alt={post.title}
+                                        loading="lazy"
                                         style={{ width: '100%', height: '200px', objectFit: 'cover' }}
                                     />
                                 )}
