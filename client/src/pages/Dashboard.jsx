@@ -87,6 +87,7 @@ const Dashboard = () => {
                             <label style={{ display: 'block', marginBottom: '0.5rem' }}>Category</label>
                             <select className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
                                 <option value="Tech">Tech</option>
+                                <option value="Sports">Sports</option>
                                 <option value="Lifestyle">Lifestyle</option>
                                 <option value="Design">Design</option>
                                 <option value="Other">Other</option>
