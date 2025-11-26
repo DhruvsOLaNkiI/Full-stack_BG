@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# IMPORTANT: Replace with your actual backend URL after deployment
-Sitemap: https://your-backend-url.onrender.com/sitemap.xml
+Sitemap: https://kirdarbarcelona.vercel.app/sitemap.xml

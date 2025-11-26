@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/sitemap.xml",
-            "destination": "https://YOUR-BACKEND-URL.onrender.com/sitemap.xml"
+            "destination": "https://full-stack-bg.onrender.com/sitemap.xml"
         },
         {
             "source": "/api/:match*",
-            "destination": "https://YOUR-BACKEND-URL.onrender.com/api/:match*"
+            "destination": "https://full-stack-bg.onrender.com/api/:match*"
         },
         {
             "source": "/(.*)",
