@@ -6,7 +6,7 @@ import { Box, Typography, Skeleton, styled } from '@mui/material';
 // Styled Components for Ceraso Font Aesthetic
 const BlogTitle = styled(Typography)(({ theme }) => ({
     fontFamily: '"Ceraso", "Playfair Display", serif', // Fallback to Playfair if Ceraso isn't local
-    fontSize: '6rem',
+    fontSize: 'clamp(3rem, 10vw, 6rem)', // Responsive font size
     fontWeight: 900,
     textAlign: 'center',
     background: 'linear-gradient(135deg, #1f2937 0%, #f59e0b 100%)',
@@ -17,9 +17,6 @@ const BlogTitle = styled(Typography)(({ theme }) => ({
     letterSpacing: '-0.02em',
     marginBottom: '3rem',
     lineHeight: 1,
-    [theme.breakpoints.down('md')]: {
-        fontSize: '4rem',
-    }
 }));
 
 const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardColor = 'white', hasPattern = false }) => {
@@ -39,7 +36,7 @@ const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardCo
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
-                padding: showExcerpt ? '3rem' : '2rem',
+                padding: showExcerpt ? 'clamp(1.5rem, 5vw, 3rem)' : '2rem', // Responsive padding
                 color: '#1f2937',
                 textDecoration: 'none',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -146,7 +143,7 @@ const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardCo
                 </Box>
 
                 <Typography variant="h3" sx={{
-                    fontSize: showExcerpt ? '3rem' : '1.75rem',
+                    fontSize: showExcerpt ? 'clamp(1.8rem, 4vw, 3rem)' : '1.75rem', // Responsive font size
                     fontWeight: '900',
                     lineHeight: 1.1,
                     marginBottom: showExcerpt ? '1.5rem' : '0.75rem',
