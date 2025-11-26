@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kirdarbarcelona.vercel.app/sitemap.xml
+Sitemap: https://www.kirdarbarcelona.com/sitemap.xml
