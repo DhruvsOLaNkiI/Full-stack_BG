@@ -83,9 +83,9 @@ const Home = () => {
     return (
         <div>
             <Helmet>
-                <title>Home | KirdarBlogs</title>
-                <meta name="description" content="Latest blogs and stories from our community." />
-                <meta property="og:title" content="KirdarBlogs - Share Your Stories" />
+                <title>Home | KirdarBarcelona</title>
+                <meta name="description" content="A community platform to share your thoughts, stories, and ideas with the world." />
+                <meta property="og:title" content="KirdarBarcelona - Share Your Stories" />
                 <meta property="og:description" content="Latest blogs and stories from our community." />
                 <meta property="og:type" content="website" />
             </Helmet>

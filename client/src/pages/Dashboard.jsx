@@ -46,7 +46,7 @@ const Dashboard = () => {
     return (
         <div className="container">
             <Helmet>
-                <title>Dashboard | KirdarBlogs</title>
+                <title>Dashboard | KirdarBarcelona</title>
             </Helmet>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>

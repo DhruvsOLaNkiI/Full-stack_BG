@@ -44,7 +44,7 @@ const Navbar = () => {
             <nav className="glass" style={{ position: 'sticky', top: 0, zIndex: 100 }}>
                 <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
                     <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold' }} className="navbar-logo">
-                        KirdarBlogs
+                        KirdarBarcelona
                     </Link>
 
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>

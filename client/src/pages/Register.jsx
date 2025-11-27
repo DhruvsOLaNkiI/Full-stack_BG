@@ -23,7 +23,7 @@ const Register = () => {
     return (
         <div style={{ maxWidth: '400px', margin: '0 auto', paddingTop: '4rem' }}>
             <Helmet>
-                <title>Register | KirdarBlogs</title>
+                <title>Register | KirdarBarcelona</title>
             </Helmet>
             <div className="glass" style={{ padding: '2rem', borderRadius: '1rem' }}>
                 <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Create Account</h2>

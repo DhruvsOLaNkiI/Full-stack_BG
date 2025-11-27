@@ -113,9 +113,9 @@ const Post = () => {
     return (
         <div className="container" style={{ maxWidth: '800px', padding: '1rem' }}>
             <Helmet>
-                <title>{post.title} | KirdarBlogs</title>
+                <title>{post.title} | KirdarBarcelona</title>
                 <meta name="description" content={post.content.substring(0, 150)} />
-                <meta property="og:title" content={`${post.title} | KirdarBlogs`} />
+                <meta property="og:title" content={`${post.title} | KirdarBarcelona`} />
                 <meta property="og:description" content={post.content.substring(0, 150)} />
                 <meta property="og:type" content="article" />
                 {post.imageUrl && <meta property="og:image" content={post.imageUrl} />}

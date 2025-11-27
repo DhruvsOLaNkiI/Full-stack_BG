@@ -74,7 +74,7 @@ const Profile = () => {
     return (
         <div className="container" style={{ maxWidth: '1000px' }}>
             <Helmet>
-                <title>{userName} | KirdarBlogs</title>
+                <title>{userName} | KirdarBarcelona</title>
             </Helmet>
 
             {/* Profile Header Card */}

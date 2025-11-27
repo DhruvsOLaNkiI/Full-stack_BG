@@ -236,7 +236,7 @@ const BentoGrid = memo(({ data, loading = false }) => {
     return (
         <Box sx={{ marginBottom: '4rem' }}>
             <BlogTitle variant="h1">
-                KirdarBlogs
+                KirdarBarcelona
             </BlogTitle>
 
             <Box className="bento-grid" sx={{

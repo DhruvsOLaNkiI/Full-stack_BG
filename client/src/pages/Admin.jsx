@@ -46,7 +46,7 @@ const Admin = () => {
     return (
         <div className="container">
             <Helmet>
-                <title>Admin Panel | KirdarBlogs</title>
+                <title>Admin Panel | KirdarBarcelona</title>
             </Helmet>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>

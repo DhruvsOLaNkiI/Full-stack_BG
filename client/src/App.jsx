@@ -38,7 +38,7 @@ function App() {
             </Routes>
           </main>
           <footer className="container" style={{ padding: '2rem 0', textAlign: 'center', color: 'var(--text-muted)' }}>
-            <p>&copy; 2025 KirdarBlogs. All rights reserved.</p>
+            <p>&copy; 2025 KirdarBarcelona. All rights reserved.</p>
           </footer>
         </div>
       </Router>
