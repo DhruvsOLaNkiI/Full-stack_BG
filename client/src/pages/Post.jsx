@@ -213,6 +213,7 @@ const Post = () => {
                     )}
 
                     <div
+                        className="post-content"
                         style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', lineHeight: 1.8, marginBottom: '2rem' }}
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
