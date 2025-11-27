@@ -23,6 +23,10 @@ const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardCo
     const [imageLoaded, setImageLoaded] = useState(false);
     if (!post) return null;
 
+    const stripHtml = (html) => {
+        return html ? html.replace(/<[^>]*>?/gm, '') : '';
+    };
+
     return (
         <Box
             component={Link}
@@ -168,7 +172,7 @@ const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardCo
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden'
                     }}>
-                        {post.content}
+                        {stripHtml(post.content)}
                     </Typography>
                 )}
 

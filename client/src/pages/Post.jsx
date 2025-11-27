@@ -212,9 +212,10 @@ const Post = () => {
                         />
                     )}
 
-                    <div style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', lineHeight: 1.8, whiteSpace: 'pre-wrap', marginBottom: '2rem' }}>
-                        {post.content}
-                    </div>
+                    <div
+                        style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', lineHeight: 1.8, marginBottom: '2rem' }}
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
 
                     <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
                         <InteractionButtons

@@ -71,6 +71,10 @@ const Profile = () => {
         return name ? name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : '??';
     };
 
+    const stripHtml = (html) => {
+        return html ? html.replace(/<[^>]*>?/gm, '') : '';
+    };
+
     return (
         <div className="container" style={{ maxWidth: '1000px' }}>
             <Helmet>
@@ -206,7 +210,7 @@ const Profile = () => {
                                     <Link to={`/post/${post.slug || post.id}`} style={{ textDecoration: 'none' }}>{post.title}</Link>
                                 </h3>
                                 <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', flex: 1, fontSize: '0.9rem', lineHeight: 1.6 }}>
-                                    {post.content.substring(0, 100)}...
+                                    {stripHtml(post.content).substring(0, 100)}...
                                 </p>
 
                                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
