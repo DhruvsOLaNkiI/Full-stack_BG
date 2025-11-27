@@ -1,6 +1,15 @@
 const Post = require('../models/Post');
 const slugify = require('slugify');
 
+// Helper to resolve post by ID or Slug
+const resolvePost = async (idOrSlug) => {
+    let post = await Post.findBySlug(idOrSlug);
+    if (!post) {
+        post = await Post.findById(idOrSlug);
+    }
+    return post;
+};
+
 exports.getAllPosts = async (req, res) => {
     try {
         const { category, tag, sortBy, startDate, endDate, limit = 50 } = req.query;
@@ -143,7 +152,7 @@ exports.createPost = async (req, res) => {
 exports.updatePost = async (req, res) => {
     try {
         const { title, content, tags, category, imageUrl } = req.body;
-        const post = await Post.findById(req.params.id);
+        const post = await resolvePost(req.params.id);
 
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
@@ -158,7 +167,7 @@ exports.updatePost = async (req, res) => {
         const updateData = { title, content, tags, category };
         if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
 
-        const updated = await Post.update(req.params.id, updateData);
+        const updated = await Post.update(post.id, updateData);
         console.log('Post updated in DB:', updated);
         res.json(updated);
     } catch (error) {
@@ -171,7 +180,7 @@ exports.deletePost = async (req, res) => {
         console.log(`Attempting to delete post: ${req.params.id}`);
         console.log(`User: ${req.userId}, Role: ${req.role}`);
 
-        const post = await Post.findById(req.params.id);
+        const post = await resolvePost(req.params.id);
 
         if (!post) {
             console.log('Post not found');
@@ -185,7 +194,7 @@ exports.deletePost = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized' });
         }
 
-        await Post.delete(req.params.id);
+        await Post.delete(post.id);
         console.log('Post deleted successfully');
         res.json({ message: 'Post deleted' });
     } catch (error) {
@@ -197,15 +206,14 @@ exports.deletePost = async (req, res) => {
 exports.toggleLike = async (req, res) => {
     try {
         const { db } = require('../config/firebase');
-        const postRef = db.collection('posts').doc(req.params.id);
-        const post = await postRef.get();
+        const post = await resolvePost(req.params.id);
 
-        if (!post.exists) {
+        if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
 
-        const postData = post.data();
-        const likes = postData.likes || [];
+        const postRef = db.collection('posts').doc(post.id);
+        const likes = post.likes || [];
         const userId = req.userId;
 
         if (likes.includes(userId)) {
@@ -221,7 +229,7 @@ exports.toggleLike = async (req, res) => {
         }
 
         const updated = await postRef.get();
-        res.json({ id: req.params.id, ...updated.data() });
+        res.json({ id: post.id, ...updated.data() });
     } catch (error) {
         res.status(500).json({ message: 'Error toggling like', error: error.message });
     }
@@ -232,10 +240,10 @@ exports.addComment = async (req, res) => {
         const { content } = req.body;
         const { db } = require('../config/firebase');
         const User = require('../models/User');
-        const postRef = db.collection('posts').doc(req.params.id);
-        const post = await postRef.get();
 
-        if (!post.exists) {
+        const post = await resolvePost(req.params.id);
+
+        if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
 
@@ -250,12 +258,12 @@ exports.addComment = async (req, res) => {
             createdAt: new Date().toISOString()
         };
 
-        await db.collection('posts').doc(req.params.id).collection('comments').add(comment);
+        await db.collection('posts').doc(post.id).collection('comments').add(comment);
 
         // Increment comment count
-        const postData = post.data();
+        const postRef = db.collection('posts').doc(post.id);
         await postRef.update({
-            commentsCount: (postData.commentsCount || 0) + 1
+            commentsCount: (post.commentsCount || 0) + 1
         });
 
         res.status(201).json(comment);
@@ -267,7 +275,13 @@ exports.addComment = async (req, res) => {
 exports.getComments = async (req, res) => {
     try {
         const { db } = require('../config/firebase');
-        const snapshot = await db.collection('posts').doc(req.params.id).collection('comments')
+        const post = await resolvePost(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        const snapshot = await db.collection('posts').doc(post.id).collection('comments')
             .orderBy('createdAt', 'desc')
             .get();
 
