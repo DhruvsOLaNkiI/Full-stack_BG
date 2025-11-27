@@ -4,6 +4,8 @@ import api from '../api';
 import { Helmet } from 'react-helmet-async';
 import { Heart, Eye, MessageCircle } from 'lucide-react';
 import InteractionButtons from '../components/InteractionButtons';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 const Post = () => {
     const { id } = useParams();
@@ -169,13 +171,23 @@ const Post = () => {
                         </div>
                         <div>
                             <label style={{ display: 'block', marginBottom: '0.5rem' }}>Content</label>
-                            <textarea
-                                className="input"
-                                value={editForm.content}
-                                onChange={(e) => setEditForm({ ...editForm, content: e.target.value })}
-                                style={{ minHeight: '200px' }}
-                                required
-                            />
+                            <div className="quill-wrapper">
+                                <ReactQuill
+                                    theme="snow"
+                                    value={editForm.content}
+                                    onChange={(content) => setEditForm({ ...editForm, content })}
+                                    modules={{
+                                        toolbar: [
+                                            [{ 'header': [1, 2, 3, false] }],
+                                            ['bold', 'italic', 'underline'],
+                                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                            ['blockquote', 'code-block'],
+                                            ['link', 'image'],
+                                            ['clean']
+                                        ]
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                             <button type="submit" className="btn btn-primary">Save Changes</button>
