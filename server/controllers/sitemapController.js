@@ -32,7 +32,7 @@ exports.getSitemap = async (req, res) => {
             const lastMod = post.updatedAt || post.createdAt || new Date().toISOString();
             xml += `
   <url>
-    <loc>${baseUrl}/post/${post.id}</loc>
+    <loc>${baseUrl}/post/${post.slug || post.id}</loc>
     <lastmod>${lastMod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

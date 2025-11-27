@@ -23,7 +23,7 @@ const Dashboard = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/posts', {
+            const response = await api.post('/posts', {
                 title,
                 content,
                 category,
@@ -35,7 +35,9 @@ const Dashboard = () => {
             setContent('');
             setImageUrl('');
             setTags('');
-            setTimeout(() => navigate('/'), 1500);
+            // Use the slug from response if available, otherwise just go home
+            const newPost = response.data;
+            setTimeout(() => navigate(`/post/${newPost.slug || newPost.id}`), 1500);
         } catch (error) {
             setMessage('Failed to create post');
         }

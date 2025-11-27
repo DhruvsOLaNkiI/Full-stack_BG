@@ -26,7 +26,7 @@ const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardCo
     return (
         <Box
             component={Link}
-            to={`/post/${post.id}`}
+            to={`/post/${post.slug || post.id}`}
             state={{ post }} // Pass post data for instant load
             className={className}
             sx={{
@@ -185,7 +185,7 @@ const ListItem = memo(({ post }) => {
     return (
         <Box
             component={Link}
-            to={`/post/${post.id}`}
+            to={`/post/${post.slug || post.id}`}
             state={{ post }} // Pass post data for instant load
             sx={{
                 display: 'flex',

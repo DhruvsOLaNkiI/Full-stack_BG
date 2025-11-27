@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const slugify = require('slugify');
 
 exports.getAllPosts = async (req, res) => {
     try {
@@ -33,7 +34,13 @@ exports.getAllPosts = async (req, res) => {
 
 exports.getPostById = async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const { id } = req.params;
+        let post = await Post.findBySlug(id);
+
+        if (!post) {
+            post = await Post.findById(id);
+        }
+
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
@@ -96,6 +103,20 @@ exports.createPost = async (req, res) => {
         const user = await User.findById(req.userId);
         const authorName = user?.name || 'Anonymous';
 
+        // Generate Slug
+        let slug = slugify(title, { lower: true, strict: true });
+
+        // Ensure uniqueness
+        let slugExists = await Post.findBySlug(slug);
+        let counter = 1;
+        let originalSlug = slug;
+
+        while (slugExists) {
+            slug = `${originalSlug}-${counter}`;
+            slugExists = await Post.findBySlug(slug);
+            counter++;
+        }
+
         const newPost = {
             title,
             content,
@@ -104,6 +125,7 @@ exports.createPost = async (req, res) => {
             tags: tags || [],
             category: category || 'General',
             imageUrl: req.body.imageUrl || '',
+            slug,
             likes: [],
             commentsCount: 0,
             views: 0,

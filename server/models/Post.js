@@ -1,7 +1,7 @@
 const { db, admin } = require('../config/firebase');
 
 class Post {
-    constructor(title, content, authorId, authorName, tags = [], category = 'General', imageUrl = '') {
+    constructor(title, content, authorId, authorName, tags = [], category = 'General', imageUrl = '', slug = '') {
         this.title = title;
         this.content = content;
         this.authorId = authorId;
@@ -9,6 +9,7 @@ class Post {
         this.tags = tags;
         this.category = category;
         this.imageUrl = imageUrl || '';
+        this.slug = slug;
         this.likes = likes || [];
         this.commentsCount = commentsCount || 0;
         this.views = 0;
@@ -53,6 +54,13 @@ class Post {
     static async findById(id) {
         const doc = await db.collection('posts').doc(id).get();
         if (!doc.exists) return null;
+        return { id: doc.id, ...doc.data() };
+    }
+
+    static async findBySlug(slug) {
+        const snapshot = await db.collection('posts').where('slug', '==', slug).limit(1).get();
+        if (snapshot.empty) return null;
+        const doc = snapshot.docs[0];
         return { id: doc.id, ...doc.data() };
     }
 

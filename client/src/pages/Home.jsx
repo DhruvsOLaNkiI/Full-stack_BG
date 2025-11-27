@@ -174,7 +174,7 @@ const Home = () => {
                                         {post.category}
                                     </span>
                                     <h2 style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>
-                                        <Link to={`/post/${post.id}`} state={{ post }}>{post.title}</Link>
+                                        <Link to={`/post/${post.slug || post.id}`} state={{ post }}>{post.title}</Link>
                                     </h2>
                                     <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
                                         by <Link to={`/profile/${post.authorId}`} style={{ color: 'var(--text-muted)', textDecoration: 'none', fontWeight: '500' }} onMouseOver={(e) => e.target.style.color = 'var(--primary)'} onMouseOut={(e) => e.target.style.color = 'var(--text-muted)'}>{post.authorName || 'Anonymous'}</Link>
@@ -202,7 +202,7 @@ const Home = () => {
                                         <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                                             {new Date(post.createdAt).toLocaleDateString()} • {new Date(post.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </span>
-                                        <Link to={`/post/${post.id}`} state={{ post }} className="btn btn-outline" style={{ padding: '0.25rem 0.75rem', fontSize: '0.9rem' }}>Read More</Link>
+                                        <Link to={`/post/${post.slug || post.id}`} state={{ post }} className="btn btn-outline" style={{ padding: '0.25rem 0.75rem', fontSize: '0.9rem' }}>Read More</Link>
                                     </div>
                                 </div>
                             </div>

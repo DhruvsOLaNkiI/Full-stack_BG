@@ -203,7 +203,7 @@ const Profile = () => {
                                     {post.category}
                                 </span>
                                 <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', lineHeight: 1.4 }}>
-                                    <Link to={`/post/${post.id}`} style={{ textDecoration: 'none' }}>{post.title}</Link>
+                                    <Link to={`/post/${post.slug || post.id}`} style={{ textDecoration: 'none' }}>{post.title}</Link>
                                 </h3>
                                 <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', flex: 1, fontSize: '0.9rem', lineHeight: 1.6 }}>
                                     {post.content.substring(0, 100)}...
@@ -228,7 +228,7 @@ const Profile = () => {
                                     <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                                         {new Date(post.createdAt).toLocaleDateString()}
                                     </span>
-                                    <Link to={`/post/${post.id}`} className="btn btn-outline" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}>Read</Link>
+                                    <Link to={`/post/${post.slug || post.id}`} className="btn btn-outline" style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}>Read</Link>
                                 </div>
                             </div>
                         </div>
