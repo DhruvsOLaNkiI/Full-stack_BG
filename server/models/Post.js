@@ -1,7 +1,7 @@
 const { db, admin } = require('../config/firebase');
 
 class Post {
-    constructor(title, content, authorId, authorName, tags = [], category = 'General', imageUrl = '', slug = '') {
+    constructor(title, content, authorId, authorName, tags = [], category = 'General', imageUrl = '', slug = '', likes = [], commentsCount = 0) {
         this.title = title;
         this.content = content;
         this.authorId = authorId;

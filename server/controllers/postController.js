@@ -168,17 +168,28 @@ exports.updatePost = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
     try {
+        console.log(`Attempting to delete post: ${req.params.id}`);
+        console.log(`User: ${req.userId}, Role: ${req.role}`);
+
         const post = await Post.findById(req.params.id);
 
-        if (!post) return res.status(404).json({ message: 'Post not found' });
+        if (!post) {
+            console.log('Post not found');
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        console.log(`Post author: ${post.authorId}`);
 
         if (post.authorId !== req.userId && req.role !== 'admin') {
+            console.log('Not authorized');
             return res.status(403).json({ message: 'Not authorized' });
         }
 
         await Post.delete(req.params.id);
+        console.log('Post deleted successfully');
         res.json({ message: 'Post deleted' });
     } catch (error) {
+        console.error('Error in deletePost:', error);
         res.status(500).json({ message: 'Error deleting post', error: error.message });
     }
 };
