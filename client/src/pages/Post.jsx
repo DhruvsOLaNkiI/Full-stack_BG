@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import api from '../api';
 import { Helmet } from 'react-helmet-async';
@@ -176,7 +176,7 @@ const Post = () => {
                                     theme="snow"
                                     value={editForm.content}
                                     onChange={(content) => setEditForm({ ...editForm, content })}
-                                    modules={{
+                                    modules={useMemo(() => ({
                                         toolbar: [
                                             [{ 'header': [1, 2, 3, false] }],
                                             ['bold', 'italic', 'underline'],
@@ -185,7 +185,7 @@ const Post = () => {
                                             ['link', 'image'],
                                             ['clean']
                                         ]
-                                    }}
+                                    }), [])}
                                 />
                             </div>
                         </div>

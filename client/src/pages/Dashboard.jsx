@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -128,7 +128,7 @@ const Dashboard = () => {
                                     theme="snow"
                                     value={content}
                                     onChange={setContent}
-                                    modules={{
+                                    modules={useMemo(() => ({
                                         toolbar: [
                                             [{ 'header': [1, 2, 3, false] }],
                                             ['bold', 'italic', 'underline'],
@@ -137,7 +137,7 @@ const Dashboard = () => {
                                             ['link', 'image'],
                                             ['clean']
                                         ]
-                                    }}
+                                    }), [])}
                                     placeholder="Write your story here..."
                                 />
                             </div>
