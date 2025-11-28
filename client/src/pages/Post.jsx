@@ -172,7 +172,7 @@ const Post = () => {
                         <div>
                             <label style={{ display: 'block', marginBottom: '0.5rem' }}>Content</label>
                             <div className="quill-wrapper">
-                                <ReactQuill
+                                {/* <ReactQuill
                                     theme="snow"
                                     value={editForm.content}
                                     onChange={(content) => setEditForm({ ...editForm, content })}
@@ -186,6 +186,12 @@ const Post = () => {
                                             ['clean']
                                         ]
                                     }), [])}
+                                /> */}
+                                <textarea
+                                    className="input"
+                                    style={{ minHeight: '300px', fontFamily: 'inherit' }}
+                                    value={editForm.content}
+                                    onChange={(e) => setEditForm({ ...editForm, content: e.target.value })}
                                 />
                             </div>
                         </div>
