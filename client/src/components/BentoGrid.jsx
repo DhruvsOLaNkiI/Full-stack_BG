@@ -269,19 +269,13 @@ const BentoGrid = memo(({ data, loading = false }) => {
                         )}
                     </Box>
 
-                    <Box sx={{ padding: '2rem', borderRadius: '2rem', background: 'var(--card-peach)' }}>
-                        <Box sx={{ marginBottom: '1.5rem' }}>
-                            <Typography variant="h6" sx={{ fontWeight: '800', color: '#1f2937', marginBottom: '0.5rem' }}>
-                                Featured Reads
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: '#6b7280' }}>
-                                Quick reads from the community
-                            </Typography>
-                        </Box>
+                    <Box sx={{ flex: 1, minHeight: '200px', display: 'flex' }}>
                         {middleList && middleList.length > 0 ? (
-                            middleList.map(post => <ListItem key={post.id} post={post} />)
+                            <FeaturedCard post={middleList[0]} style={{ flex: 1, background: 'var(--card-peach)' }} />
                         ) : (
-                            <Typography sx={{ textAlign: 'center', color: 'rgba(0,0,0,0.4)', padding: '2rem' }}>No featured list items</Typography>
+                            <Box sx={{ flex: 1, borderRadius: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', background: 'white' }}>
+                                Middle Slot Empty
+                            </Box>
                         )}
                     </Box>
 
