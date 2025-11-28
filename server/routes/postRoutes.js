@@ -15,4 +15,8 @@ router.post('/:id/like', verifyToken, postController.toggleLike);
 router.post('/:id/comments', verifyToken, postController.addComment);
 router.get('/:id/comments', postController.getComments);
 
+// API Key Protected
+// const { verifyApiKey } = require('../middleware/apiKeyAuth'); // Moved to top
+// router.post('/auto-create', verifyApiKey, postController.autoCreatePost); // Moved to top
+
 module.exports = router;
