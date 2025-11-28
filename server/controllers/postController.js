@@ -203,6 +203,33 @@ exports.deletePost = async (req, res) => {
     }
 };
 
+exports.bulkDeletePosts = async (req, res) => {
+    try {
+        const { ids } = req.body;
+
+        if (!Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({ message: 'No IDs provided' });
+        }
+
+        // Admin check
+        if (req.role !== 'admin') {
+            return res.status(403).json({ message: 'Admin access required' });
+        }
+
+        console.log(`Bulk deleting ${ids.length} posts`);
+
+        // Use Promise.all for parallel deletion
+        // We use Post.delete which handles the DB call
+        await Promise.all(ids.map(id => Post.delete(id)));
+
+        console.log('Bulk delete successful');
+        res.json({ message: `Successfully deleted ${ids.length} posts` });
+    } catch (error) {
+        console.error('Error in bulkDeletePosts:', error);
+        res.status(500).json({ message: 'Error bulk deleting posts', error: error.message });
+    }
+};
+
 exports.toggleLike = async (req, res) => {
     try {
         const { db } = require('../config/firebase');
