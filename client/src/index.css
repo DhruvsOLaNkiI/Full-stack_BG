@@ -299,6 +299,13 @@ h3 {
   margin-bottom: 0.5rem;
 }
 
+textarea.input {
+  resize: vertical;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
 .quill-wrapper .ql-editor blockquote {
   border-left: 4px solid var(--primary);
   padding-left: 1rem;
