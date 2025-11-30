@@ -23,8 +23,24 @@
 
 <body>
 
+  <style>
+    .ad-sidebar {
+      position: fixed;
+      top: 100px;
+      left: 10px;
+      z-index: 90;
+    }
+
+    /* Hide ad on screens smaller than 1450px to prevent overlap with main content */
+    @media (max-width: 1450px) {
+      .ad-sidebar {
+        display: none;
+      }
+    }
+  </style>
+
   <!-- Ad Container - Fixed Left Side -->
-  <div style="position: fixed; top: 100px; left: 10px; z-index: 90;">
+  <div class="ad-sidebar">
     <script type="text/javascript">
       atOptions = {
         'key': 'f77ac3df558d4425a21c8ffdf5b86384',
