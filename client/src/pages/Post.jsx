@@ -113,7 +113,23 @@ const Post = () => {
     const isAuthor = user.id === post.authorId;
 
     return (
-        <div className="container" style={{ maxWidth: '800px', padding: '1rem' }}>
+        <div className="container" style={{ paddingBottom: '4rem' }}>
+            {/* Ad Container Below Navbar */}
+            <div style={{
+                width: '100%',
+                minHeight: '100px',
+                backgroundColor: 'var(--surface)',
+                marginBottom: '2rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: '1px solid var(--border)',
+                borderRadius: '0.5rem'
+            }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Advertisement Space</p>
+                {/* Place your ad code here */}
+            </div>
+
             <Helmet>
                 <title>{post.title} | KirdarBarcelona</title>
                 <meta name="description" content={post.content.substring(0, 150)} />
