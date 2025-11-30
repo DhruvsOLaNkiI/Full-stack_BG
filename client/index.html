@@ -24,23 +24,47 @@
 <body>
 
   <style>
-    .ad-sidebar {
+    .ad-sidebar-left {
       position: fixed;
       top: 100px;
       left: 10px;
       z-index: 90;
     }
 
-    /* Hide ad on screens smaller than 1450px to prevent overlap with main content */
+    .ad-sidebar-right {
+      position: fixed;
+      top: 100px;
+      right: 10px;
+      z-index: 90;
+    }
+
+    /* Hide ads on screens smaller than 1450px to prevent overlap with main content */
     @media (max-width: 1450px) {
-      .ad-sidebar {
+
+      .ad-sidebar-left,
+      .ad-sidebar-right {
         display: none;
       }
     }
   </style>
 
   <!-- Ad Container - Fixed Left Side -->
-  <div class="ad-sidebar">
+  <div class="ad-sidebar-left">
+    <script type="text/javascript">
+      atOptions = {
+        'key': 'f77ac3df558d4425a21c8ffdf5b86384',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript"
+      src="//www.highperformanceformat.com/f77ac3df558d4425a21c8ffdf5b86384/invoke.js"></script>
+  </div>
+
+  <!-- Ad Container - Fixed Right Side -->
+  <div class="ad-sidebar-right">
     <script type="text/javascript">
       atOptions = {
         'key': 'f77ac3df558d4425a21c8ffdf5b86384',

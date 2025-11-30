@@ -276,8 +276,7 @@ const Post = () => {
                             <span>By <Link to={`/profile/${post.authorId}`} style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.color = 'var(--primary)'} onMouseOut={(e) => e.target.style.color = 'inherit'}>{post.authorName || 'Anonymous'}</Link></span>
                             <span>•</span>
                             <span>{new Date(post.createdAt).toLocaleDateString()} at {new Date(post.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                            <span>•</span>
-                            <span><Eye size={16} style={{ verticalAlign: 'middle' }} /> {post.views || 0} Views</span>
+
                         </div>
                     </div>
 
