@@ -314,6 +314,18 @@ textarea.input {
   font-style: italic;
 }
 
+/* Responsive Ad Container */
+.ad-banner-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  overflow-x: auto;
+  min-height: 60px;
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+}
+
 .quill-wrapper .ql-editor pre {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 0.25rem;

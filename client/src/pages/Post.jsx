@@ -263,13 +263,7 @@ const Post = () => {
                         <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1.2, margin: '1rem 0' }}>{post.title}</h1>
 
                         {/* Ad Container Below Title */}
-                        <div style={{
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            margin: '1rem 0',
-                            overflow: 'hidden'
-                        }}>
+                        <div className="ad-banner-container">
                             <div id="ad-container-title-468x60"></div>
                         </div>
                         <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
@@ -295,13 +289,7 @@ const Post = () => {
                     />
 
                     {/* Ad Container Between Text and Buttons */}
-                    <div style={{
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        margin: '2rem 0',
-                        overflow: 'hidden'
-                    }}>
+                    <div className="ad-banner-container">
                         <div id="ad-container-468x60"></div>
                     </div>
 
