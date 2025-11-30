@@ -22,6 +22,17 @@ const Dashboard = () => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const isAdmin = user.role === 'admin';
 
+    const quillModules = useMemo(() => ({
+        toolbar: [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['blockquote', 'code-block'],
+            ['link', 'image'],
+            ['clean']
+        ]
+    }), []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -150,16 +161,7 @@ const Dashboard = () => {
                                         theme="snow"
                                         value={content}
                                         onChange={setContent}
-                                        modules={useMemo(() => ({
-                                            toolbar: [
-                                                [{ 'header': [1, 2, 3, false] }],
-                                                ['bold', 'italic', 'underline'],
-                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                                ['blockquote', 'code-block'],
-                                                ['link', 'image'],
-                                                ['clean']
-                                            ]
-                                        }), [])}
+                                        modules={quillModules}
                                         placeholder="Write your story here..."
                                     />
                                 </div>
