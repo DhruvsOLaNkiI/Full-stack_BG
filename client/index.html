@@ -38,8 +38,8 @@
       z-index: 90;
     }
 
-    /* Hide ads on screens smaller than 1450px to prevent overlap with main content */
-    @media (max-width: 1450px) {
+    /* Hide ads on screens smaller than 1350px to prevent major overlap */
+    @media (max-width: 1350px) {
 
       .ad-sidebar-left,
       .ad-sidebar-right {
@@ -49,41 +49,34 @@
   </style>
 
   <!-- Ad Container - Fixed Left Side -->
-  <div id="ad-sidebar-left" class="ad-sidebar-left"></div>
+  <div class="ad-sidebar-left">
+    <script type="text/javascript">
+      atOptions = {
+        'key': 'f77ac3df558d4425a21c8ffdf5b86384',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript"
+      src="//www.highperformanceformat.com/f77ac3df558d4425a21c8ffdf5b86384/invoke.js"></script>
+  </div>
 
   <!-- Ad Container - Fixed Right Side -->
-  <div id="ad-sidebar-right" class="ad-sidebar-right"></div>
-
-  <script>
-    // Only load sidebar ads on large screens
-    if (window.innerWidth > 1450) {
-      function injectAd(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        const script1 = document.createElement('script');
-        script1.type = 'text/javascript';
-        script1.text = `
-          atOptions = {
-            'key': 'f77ac3df558d4425a21c8ffdf5b86384',
-            'format': 'iframe',
-            'height': 600,
-            'width': 160,
-            'params': {}
-          };
-        `;
-        container.appendChild(script1);
-
-        const script2 = document.createElement('script');
-        script2.type = 'text/javascript';
-        script2.src = '//www.highperformanceformat.com/f77ac3df558d4425a21c8ffdf5b86384/invoke.js';
-        container.appendChild(script2);
-      }
-
-      injectAd('ad-sidebar-left');
-      injectAd('ad-sidebar-right');
-    }
-  </script>
+  <div class="ad-sidebar-right">
+    <script type="text/javascript">
+      atOptions = {
+        'key': 'f77ac3df558d4425a21c8ffdf5b86384',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript"
+      src="//www.highperformanceformat.com/f77ac3df558d4425a21c8ffdf5b86384/invoke.js"></script>
+  </div>
 
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
