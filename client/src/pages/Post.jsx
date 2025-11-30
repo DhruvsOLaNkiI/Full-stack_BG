@@ -32,6 +32,30 @@ const Post = () => {
         fetchComments();
     }, [id]);
 
+    useEffect(() => {
+        // Inject Ad Script
+        const adContainer = document.getElementById('ad-container-468x60');
+        if (adContainer && !adContainer.hasChildNodes()) {
+            const script1 = document.createElement('script');
+            script1.type = 'text/javascript';
+            script1.text = `
+                atOptions = {
+                    'key': '30f56d96e1c883b86cc7b1cc00505f36',
+                    'format': 'iframe',
+                    'height': 60,
+                    'width': 468,
+                    'params': {}
+                };
+            `;
+            adContainer.appendChild(script1);
+
+            const script2 = document.createElement('script');
+            script2.type = 'text/javascript';
+            script2.src = '//www.highperformanceformat.com/30f56d96e1c883b86cc7b1cc00505f36/invoke.js';
+            adContainer.appendChild(script2);
+        }
+    }, [post]); // Run when post loads/renders
+
     const fetchPost = async () => {
         try {
             const res = await api.get(`/posts/${id}`);
@@ -237,6 +261,17 @@ const Post = () => {
                         style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', lineHeight: 1.8, marginBottom: '2rem' }}
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
+
+                    {/* Ad Container Between Text and Buttons */}
+                    <div style={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        margin: '2rem 0',
+                        overflow: 'hidden'
+                    }}>
+                        <div id="ad-container-468x60"></div>
+                    </div>
 
                     <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
                         <InteractionButtons
