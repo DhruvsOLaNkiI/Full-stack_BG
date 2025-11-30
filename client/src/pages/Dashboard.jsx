@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import NativeAdBanner from '../components/NativeAdBanner';
+
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -146,7 +146,7 @@ const Dashboard = () => {
 
                         <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }}>Publish Story</button>
                     </form>
-                    <NativeAdBanner />
+
                 </div>
             ) : (
                 <AdminFeatured />
