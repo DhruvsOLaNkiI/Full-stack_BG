@@ -54,6 +54,28 @@ const Post = () => {
             script2.src = '//www.highperformanceformat.com/30f56d96e1c883b86cc7b1cc00505f36/invoke.js';
             adContainer.appendChild(script2);
         }
+
+        // Inject Ad Script Below Title
+        const adContainerTitle = document.getElementById('ad-container-title-468x60');
+        if (adContainerTitle && !adContainerTitle.hasChildNodes()) {
+            const script1 = document.createElement('script');
+            script1.type = 'text/javascript';
+            script1.text = `
+                atOptions = {
+                    'key': '30f56d96e1c883b86cc7b1cc00505f36',
+                    'format': 'iframe',
+                    'height': 60,
+                    'width': 468,
+                    'params': {}
+                };
+            `;
+            adContainerTitle.appendChild(script1);
+
+            const script2 = document.createElement('script');
+            script2.type = 'text/javascript';
+            script2.src = '//www.highperformanceformat.com/30f56d96e1c883b86cc7b1cc00505f36/invoke.js';
+            adContainerTitle.appendChild(script2);
+        }
     }, [post]); // Run when post loads/renders
 
     const fetchPost = async () => {
@@ -239,6 +261,17 @@ const Post = () => {
                             )}
                         </div>
                         <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1.2, margin: '1rem 0' }}>{post.title}</h1>
+
+                        {/* Ad Container Below Title */}
+                        <div style={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            margin: '1rem 0',
+                            overflow: 'hidden'
+                        }}>
+                            <div id="ad-container-title-468x60"></div>
+                        </div>
                         <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                             <span>By <Link to={`/profile/${post.authorId}`} style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.color = 'var(--primary)'} onMouseOut={(e) => e.target.style.color = 'inherit'}>{post.authorName || 'Anonymous'}</Link></span>
                             <span>•</span>
