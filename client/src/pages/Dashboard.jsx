@@ -16,6 +16,7 @@ const Dashboard = () => {
     const [category, setCategory] = useState('Tech');
     const [tags, setTags] = useState('');
     const [message, setMessage] = useState('');
+    const [showHtml, setShowHtml] = useState(false);
     const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -123,25 +124,46 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            <label style={{ display: 'block', marginBottom: '0.5rem' }}>Content</label>
-                            <div className="quill-wrapper">
-                                <ReactQuill
-                                    theme="snow"
-                                    value={content}
-                                    onChange={setContent}
-                                    modules={useMemo(() => ({
-                                        toolbar: [
-                                            [{ 'header': [1, 2, 3, false] }],
-                                            ['bold', 'italic', 'underline'],
-                                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                            ['blockquote', 'code-block'],
-                                            ['link', 'image'],
-                                            ['clean']
-                                        ]
-                                    }), [])}
-                                    placeholder="Write your story here..."
-                                />
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                <label style={{ display: 'block' }}>Content</label>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowHtml(!showHtml)}
+                                    className="btn btn-outline"
+                                    style={{ fontSize: '0.8rem', padding: '0.25rem 0.5rem' }}
+                                >
+                                    {showHtml ? 'Switch to Visual Editor' : 'Edit HTML Source'}
+                                </button>
                             </div>
+
+                            {showHtml ? (
+                                <textarea
+                                    className="input"
+                                    value={content}
+                                    onChange={(e) => setContent(e.target.value)}
+                                    style={{ minHeight: '300px', fontFamily: 'monospace', fontSize: '0.9rem' }}
+                                    placeholder="Enter HTML content here..."
+                                />
+                            ) : (
+                                <div className="quill-wrapper">
+                                    <ReactQuill
+                                        theme="snow"
+                                        value={content}
+                                        onChange={setContent}
+                                        modules={useMemo(() => ({
+                                            toolbar: [
+                                                [{ 'header': [1, 2, 3, false] }],
+                                                ['bold', 'italic', 'underline'],
+                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                ['blockquote', 'code-block'],
+                                                ['link', 'image'],
+                                                ['clean']
+                                            ]
+                                        }), [])}
+                                        placeholder="Write your story here..."
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }}>Publish Story</button>
