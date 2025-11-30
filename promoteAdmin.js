@@ -14,7 +14,7 @@ async function promoteUser() {
 
         const userDoc = snapshot.docs[0];
         await db.collection('users').doc(userDoc.id).update({ role: 'admin' });
-
+        
         console.log('✅ User promoted to ADMIN successfully!');
         console.log('👉 PLEASE LOGOUT AND LOGIN AGAIN to update your token.');
     } catch (error) {
