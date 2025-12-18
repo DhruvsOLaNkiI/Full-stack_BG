@@ -41,7 +41,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="glass" style={{ position: 'sticky', top: 0, zIndex: 100 }}>
+            <nav className="glass" style={{ position: 'sticky', top: 0, zIndex: 1100 }}>
                 <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
                     <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold' }} className="navbar-logo">
                         KirdarBarcelona
@@ -115,7 +115,7 @@ const Navbar = () => {
                         width: '100%',
                         height: '100%',
                         background: 'rgba(0,0,0,0.5)',
-                        zIndex: 1000,
+                        zIndex: 1200,
                         backdropFilter: 'blur(4px)'
                     }}
                     onClick={() => setIsSidebarOpen(false)}
@@ -127,12 +127,14 @@ const Navbar = () => {
                 style={{
                     position: 'fixed',
                     top: 0,
-                    right: isSidebarOpen ? 0 : '-300px',
+                    right: 0,
                     width: '280px',
                     height: '100%',
                     background: 'var(--card-bg)',
-                    zIndex: 1001,
-                    transition: 'right 0.3s ease',
+                    zIndex: 1210,
+                    transition: 'transform 0.3s ease, visibility 0.3s ease',
+                    transform: isSidebarOpen ? 'translateX(0)' : 'translateX(100%)',
+                    visibility: isSidebarOpen ? 'visible' : 'hidden',
                     boxShadow: '-5px 0 15px rgba(0,0,0,0.1)',
                     padding: '2rem',
                     display: 'flex',
