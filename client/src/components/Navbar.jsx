@@ -43,7 +43,7 @@ const Navbar = () => {
         <>
             <nav className="glass" style={{ position: 'sticky', top: 0, zIndex: 1100 }}>
                 <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
-                    <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold' }} className="navbar-logo">
+                    <Link to="/" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', fontWeight: 'bold' }} className="navbar-logo">
                         KirdarBarcelona
                     </Link>
 

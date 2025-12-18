@@ -6,7 +6,7 @@ import { Box, Typography, Skeleton, styled } from '@mui/material';
 // Styled Components for Ceraso Font Aesthetic
 const BlogTitle = styled(Typography)(({ theme }) => ({
     fontFamily: '"Ceraso", "Playfair Display", serif', // Fallback to Playfair if Ceraso isn't local
-    fontSize: 'clamp(3rem, 10vw, 6rem)', // Responsive font size
+    fontSize: 'clamp(2rem, 8vw, 6rem)', // Responsive font size
     fontWeight: 900,
     textAlign: 'center',
     background: 'linear-gradient(135deg, #1f2937 0%, #f59e0b 100%)',
@@ -47,7 +47,7 @@ const FeaturedCard = memo(({ post, className, style, showExcerpt = false, cardCo
                 cursor: 'pointer',
                 background: cardColor,
                 border: '1px solid rgba(0,0,0,0.05)',
-                minHeight: showExcerpt ? '500px' : '250px',
+                minHeight: showExcerpt ? 'clamp(300px, 50vh, 500px)' : '250px',
                 ...style,
                 '&:hover': {
                     transform: 'translateY(-4px)',
@@ -248,7 +248,7 @@ const BentoGrid = memo(({ data, loading = false }) => {
                 gridTemplateColumns: { xs: '1fr', lg: '1.2fr 1fr' },
                 gap: '1.5rem'
             }}>
-                <Box sx={{ gridColumn: { xs: 'auto', lg: '1' }, minHeight: '500px', display: 'flex' }}>
+                <Box sx={{ gridColumn: { xs: 'auto', lg: '1' }, minHeight: 'clamp(300px, 50vh, 500px)', display: 'flex' }}>
                     {hero ? (
                         <FeaturedCard post={hero} style={{ flex: 1 }} showExcerpt={true} cardColor="var(--card-tan)" hasPattern={true} />
                     ) : (
